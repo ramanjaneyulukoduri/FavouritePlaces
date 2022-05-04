@@ -1,33 +1,32 @@
 //
-//  ContentView.swift
+//  MasterView.swift
 //  FavouritePlaces
 //
-//  Created by Ramanjaneyulu Kodurion 03/05/22.
+//  Created by Ajay Girolkar on 03/05/22.
 //
 
 import SwiftUI
-import CoreData
 
-struct ContentView: View {
+struct MasterView: View {
     @Environment(\.managedObjectContext) private var viewContext
 
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \FavouritePlaceModel.id, ascending: true)],
         animation: .default)
-    private var items: FetchedResults<Item>
+    private var favouritePlaceModels: FetchedResults<FavouritePlaceModel>
 
     var body: some View {
         NavigationView {
             List {
-                ForEach(items) { item in
+                ForEach(favouritePlaceModels) { item in
                     NavigationLink {
-                        Text("Item at \(item.timestamp!, formatter: itemFormatter)")
+//                        Text("Item at \(item.timestamp!, formatter: itemFormatter)")
                     } label: {
-                        Text(item.timestamp!, formatter: itemFormatter)
+                        ImageItemView(text: "Australia", imageURL: "")
                     }
                 }
                 .onDelete(perform: deleteItems)
-            }
+            }.navigationTitle(StringConstants.favouritePlaces)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     EditButton()
@@ -44,8 +43,8 @@ struct ContentView: View {
 
     private func addItem() {
         withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
+            let newItem = FavouritePlaceModel(context: viewContext)
+            newItem.location = "New Item"
 
             do {
                 try viewContext.save()
@@ -60,7 +59,7 @@ struct ContentView: View {
 
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
+            offsets.map { favouritePlaceModels[$0] }.forEach(viewContext.delete)
 
             do {
                 try viewContext.save()
@@ -74,15 +73,8 @@ struct ContentView: View {
     }
 }
 
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
-
-struct ContentView_Previews: PreviewProvider {
+struct MasterView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        MasterView()
     }
 }
