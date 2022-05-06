@@ -23,6 +23,7 @@
 		AB1F492C28237BE2001915D3 /* ChildView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1F492B28237BE2001915D3 /* ChildView.swift */; };
 		AB1F492E2823889B001915D3 /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1F492D2823889B001915D3 /* ImageView.swift */; };
 		AB1F493028238ECB001915D3 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1F492F28238ECB001915D3 /* Extensions.swift */; };
+		AB1F493A2824C838001915D3 /* FavouritePlaceDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1F49392824C838001915D3 /* FavouritePlaceDataModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,7 @@
 		AB1F492B28237BE2001915D3 /* ChildView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildView.swift; sourceTree = "<group>"; };
 		AB1F492D2823889B001915D3 /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
 		AB1F492F28238ECB001915D3 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		AB1F49392824C838001915D3 /* FavouritePlaceDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritePlaceDataModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +180,7 @@
 		AB1F49182820EB94001915D3 /* M-V-VM */ = {
 			isa = PBXGroup;
 			children = (
+				AB1F49382824C828001915D3 /* Model */,
 				AB1F491B2820EBB0001915D3 /* ViewModel */,
 				AB1F491A2820EBAB001915D3 /* View */,
 			);
@@ -208,6 +211,14 @@
 				AB1F492D2823889B001915D3 /* ImageView.swift */,
 			);
 			path = ChildViews;
+			sourceTree = "<group>";
+		};
+		AB1F49382824C828001915D3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				AB1F49392824C838001915D3 /* FavouritePlaceDataModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -349,6 +360,7 @@
 				AB1F492C28237BE2001915D3 /* ChildView.swift in Sources */,
 				AB1F491D2820F991001915D3 /* StringConstants.swift in Sources */,
 				AB1F492828223021001915D3 /* CoreDataManager.swift in Sources */,
+				AB1F493A2824C838001915D3 /* FavouritePlaceDataModel.swift in Sources */,
 				AB1F493028238ECB001915D3 /* Extensions.swift in Sources */,
 				AB1F48E62820EB1C001915D3 /* FavouritePlacesApp.swift in Sources */,
 			);

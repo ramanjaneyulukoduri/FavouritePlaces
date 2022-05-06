@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MasterView: View {
 
-    @State var favouritePlaceModels: [FavouritePlaceModel] = []
+    @State var favouritePlaceModels: [FavouritePlaceDataModel] = []
     let viewContext = PersistenceController.shared.container.viewContext
     
     var body: some View {
@@ -17,7 +17,8 @@ struct MasterView: View {
             List {
                 ForEach(favouritePlaceModels) { item in
                     NavigationLink {
-                        ChildView(favouritePlaceModel: item)
+                        ChildView(favouritePlaceModels: $favouritePlaceModels,
+                                  favouritePlaceModel: item)
                     } label: {
                         ImageItemView(text: item.location ?? "", imageURL: item.imageURL ?? "")
                     }
@@ -41,22 +42,22 @@ struct MasterView: View {
     }
     
     func updateFavouritePlaceModels() {
-        favouritePlaceModels = CoreDataManager.getFavouritePlaceModels() ?? []
+        //favouritePlaceModels = CoreDataManager.getFavouritePlaceModels() ?? []
     }
 
     private func addItem() {
         withAnimation {
             let newItem = FavouritePlaceModel(context: viewContext)
-            newItem.id = Int32(favouritePlaceModels.count)
+            newItem.id = UUID()
             newItem.location = "New Place"
-            CoreDataManager.addItem()
+            CoreDataManager.shared.addItem()
             updateFavouritePlaceModels()
         }
     }
 
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
-            CoreDataManager.deleteData(offsets: offsets, favouritePlaceModels: favouritePlaceModels)
+            CoreDataManager.shared.deleteData(offsets: offsets, favouritePlaceDataModels: favouritePlaceModels)
             updateFavouritePlaceModels()
     }
 }

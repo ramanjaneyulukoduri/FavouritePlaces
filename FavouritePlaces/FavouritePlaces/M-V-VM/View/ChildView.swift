@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct ChildView: View {
-    @State var favouritePlaceModel: FavouritePlaceModel
+    @Binding var favouritePlaceModels: [FavouritePlaceDataModel]
+    @State var favouritePlaceModel: FavouritePlaceDataModel
     @State var isEditing: Bool = false
     @State var cityNameTextField: String = ""
     @State var locationTextField: String = ""
@@ -46,16 +47,24 @@ struct ChildView: View {
         imageURLTextField = favouritePlaceModel.imageURL ?? ""
         latitudeTextField = favouritePlaceModel.latitude ?? "0.0"
         longitudeFieldEntry = favouritePlaceModel.longitude ?? "0.0"
-
     }
     
+    func saveDataInModel() {
+        favouritePlaceModel.location = cityNameTextField
+        favouritePlaceModel.locationDescription = favouritePlaceModel.locationDescription ?? ""
+        favouritePlaceModel.imageURL = imageURLTextField
+        favouritePlaceModel.latitude = latitudeTextField
+        favouritePlaceModel.longitude = longitudeFieldEntry
+        CoreDataManager.shared.addItem()
+        //favouritePlaceModels = CoreDataManager.getFavouritePlaceModels() ?? []
+    }
     /// Show Header view with reset or undo reset button based on user selection.
     /// - Returns: view
     func addEditModeHeaderView () -> some View {
         HStack {
             Button(isEditing ? StringConstants.done : StringConstants.edit) {
                 self.isEditing.toggle()
-                //syncDataFromModel()
+                saveDataInModel()
             }
         }
     }
@@ -98,7 +107,8 @@ struct ChildView: View {
 #if DEBUG
 struct ChildView_Previews: PreviewProvider {
     static var previews: some View {
-        ChildView(favouritePlaceModel: FavouritePlaceModel())
+        ChildView(favouritePlaceModels: .constant([]),
+                  favouritePlaceModel: FavouritePlaceDataModel(id: UUID()))
     }
 }
 #endif
