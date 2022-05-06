@@ -79,7 +79,7 @@ struct ChildView: View {
     
     func saveDataInModel() {
         favouritePlaceModel.location = cityNameTextField
-        favouritePlaceModel.locationDescription = favouritePlaceModel.locationDescription ?? ""
+        favouritePlaceModel.locationDescription = locationTextField
         favouritePlaceModel.imageURL = imageURLTextField
         favouritePlaceModel.latitude = latitudeTextField
         favouritePlaceModel.longitude = longitudeFieldEntry

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		AB1F48E62820EB1C001915D3 /* FavouritePlacesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1F48E52820EB1C001915D3 /* FavouritePlacesApp.swift */; };
-		AB1F48E82820EB1C001915D3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1F48E72820EB1C001915D3 /* ContentView.swift */; };
 		AB1F48EA2820EB1D001915D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB1F48E92820EB1D001915D3 /* Assets.xcassets */; };
 		AB1F48ED2820EB1D001915D3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB1F48EC2820EB1D001915D3 /* Preview Assets.xcassets */; };
 		AB1F48EF2820EB1D001915D3 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1F48EE2820EB1D001915D3 /* Persistence.swift */; };
@@ -46,7 +45,6 @@
 /* Begin PBXFileReference section */
 		AB1F48E22820EB1C001915D3 /* FavouritePlaces.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FavouritePlaces.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB1F48E52820EB1C001915D3 /* FavouritePlacesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritePlacesApp.swift; sourceTree = "<group>"; };
-		AB1F48E72820EB1C001915D3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		AB1F48E92820EB1D001915D3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AB1F48EC2820EB1D001915D3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		AB1F48EE2820EB1D001915D3 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -115,7 +113,6 @@
 			isa = PBXGroup;
 			children = (
 				AB1F48E52820EB1C001915D3 /* FavouritePlacesApp.swift */,
-				AB1F48E72820EB1C001915D3 /* ContentView.swift */,
 				AB1F49182820EB94001915D3 /* M-V-VM */,
 				AB1F49162820EB73001915D3 /* Helper */,
 				AB1F49152820EB64001915D3 /* CoreData */,
@@ -356,7 +353,6 @@
 				AB1F48EF2820EB1D001915D3 /* Persistence.swift in Sources */,
 				AB1F48F22820EB1D001915D3 /* FavouritePlaces.xcdatamodeld in Sources */,
 				AB1F49222820FA94001915D3 /* ImageItemView.swift in Sources */,
-				AB1F48E82820EB1C001915D3 /* ContentView.swift in Sources */,
 				AB1F492C28237BE2001915D3 /* ChildView.swift in Sources */,
 				AB1F491D2820F991001915D3 /* StringConstants.swift in Sources */,
 				AB1F492828223021001915D3 /* CoreDataManager.swift in Sources */,
