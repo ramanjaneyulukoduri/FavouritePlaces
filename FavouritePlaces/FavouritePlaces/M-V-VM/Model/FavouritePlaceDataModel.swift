@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class FavouritePlaceDataModel: ObservableObject, Identifiable {
+struct FavouritePlaceDataModel: Identifiable {
     var id: UUID
     var imageURL: String?
     var latitude: String?
@@ -16,17 +16,4 @@ class FavouritePlaceDataModel: ObservableObject, Identifiable {
     var enterLocationDetailsText: String?
     var locationDescription: String?
     var longitude: String?
-    
-    init(id: UUID, imageURL: String? = nil, latitude: String? = nil,
-         location: String? = nil, enterLocationDetailsText: String? = nil,
-         locationDescription: String? = nil, longitude: String? = nil) {
-        
-        self.id = id
-        self.imageURL = imageURL
-        self.latitude = latitude
-        self.location = location
-        self.enterLocationDetailsText = enterLocationDetailsText
-        self.locationDescription = locationDescription
-        self.longitude = longitude
-    }
 }

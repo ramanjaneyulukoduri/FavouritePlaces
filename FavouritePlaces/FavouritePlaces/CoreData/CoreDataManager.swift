@@ -14,9 +14,9 @@ struct CoreDataManager {
     static let shared = CoreDataManager()
     let viewContext = PersistenceController.shared.container.viewContext
     
-     func getFavouritePlaceModels() -> [FavouritePlaceDataModel]? {
+    func getFavouritePlaceModels() -> [FavouritePlaceDataModel]? {
         let fetchRequest: NSFetchRequest<FavouritePlaceModel> = FavouritePlaceModel.fetchRequest()
-        fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \FavouritePlaceModel.id, ascending: true)]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \FavouritePlaceModel.location, ascending: true)]
         
         do {
             let favouritePlaceModels: [FavouritePlaceModel] = try viewContext.fetch(fetchRequest)
@@ -48,21 +48,18 @@ struct CoreDataManager {
         }
     }
     
-    
-     func deleteData(offsets: IndexSet, favouritePlaceDataModels: [FavouritePlaceDataModel]) {
-         let favouritePlaceModels = favouritePlaceDataModels.map { favouritePlaceDataModel in
-             return convertDataModelToCoreDataModel(favouritePlaceDataModel: favouritePlaceDataModel)
-         }
-            offsets.map { favouritePlaceModels[$0] }.forEach(viewContext.delete)
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
+    func syncCoreData(favouritePlaceDataModels: [FavouritePlaceDataModel]) {
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "FavouritePlaceModel")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        do {
+            try viewContext.execute(deleteRequest)
+        } catch let error as NSError {
+            print(error)
+        }
+        
+        for favouritePlaceDataModel in favouritePlaceDataModels {
+            addItem(favouritePlaceDataModel: favouritePlaceDataModel)
+        }
     }
     
     func convertDataModelToCoreDataModel(favouritePlaceDataModel: FavouritePlaceDataModel) -> FavouritePlaceModel {

@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ChildView: View {
-    @Binding var favouritePlaceModels: [FavouritePlaceDataModel]
     @State var favouritePlaceModel: FavouritePlaceDataModel
+    @Binding var favouritePlaceModels: [FavouritePlaceDataModel]
     @State var isEditing: Bool = false
     @State var cityNameTextField: String = ""
     @State var locationTextField: String = ""
@@ -49,15 +49,6 @@ struct ChildView: View {
         longitudeFieldEntry = favouritePlaceModel.longitude ?? "0.0"
     }
     
-    func saveDataInModel() {
-        favouritePlaceModel.location = cityNameTextField
-        favouritePlaceModel.locationDescription = favouritePlaceModel.locationDescription ?? ""
-        favouritePlaceModel.imageURL = imageURLTextField
-        favouritePlaceModel.latitude = latitudeTextField
-        favouritePlaceModel.longitude = longitudeFieldEntry
-        CoreDataManager.shared.addItem(favouritePlaceDataModel: favouritePlaceModel)
-        //favouritePlaceModels = CoreDataManager.getFavouritePlaceModels() ?? []
-    }
     /// Show Header view with reset or undo reset button based on user selection.
     /// - Returns: view
     func addEditModeHeaderView () -> some View {
@@ -86,6 +77,25 @@ struct ChildView: View {
         }
     }
     
+    func saveDataInModel() {
+        favouritePlaceModel.location = cityNameTextField
+        favouritePlaceModel.locationDescription = favouritePlaceModel.locationDescription ?? ""
+        favouritePlaceModel.imageURL = imageURLTextField
+        favouritePlaceModel.latitude = latitudeTextField
+        favouritePlaceModel.longitude = longitudeFieldEntry
+        syncMasterModel()
+    }
+    
+    func syncMasterModel() {
+        favouritePlaceModels = favouritePlaceModels.map({ favouritePlaceDataModel in
+            if favouritePlaceDataModel.id == favouritePlaceModel.id {
+                return favouritePlaceModel
+            }
+            return favouritePlaceDataModel
+        })
+        CoreDataManager.shared.syncCoreData(favouritePlaceDataModels: favouritePlaceModels)
+    }
+    
     func showNonEditModeView() -> some View {
         List {
             ImageView(imageURL: imageURLTextField,
@@ -107,8 +117,7 @@ struct ChildView: View {
 #if DEBUG
 struct ChildView_Previews: PreviewProvider {
     static var previews: some View {
-        ChildView(favouritePlaceModels: .constant([]),
-                  favouritePlaceModel: FavouritePlaceDataModel(id: UUID()))
+        ChildView(favouritePlaceModel: FavouritePlaceDataModel(id: UUID()), favouritePlaceModels: .constant([]))
     }
 }
 #endif
