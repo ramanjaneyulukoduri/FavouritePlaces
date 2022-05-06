@@ -9,11 +9,15 @@ import Foundation
 import CoreData
 
 
+/// CoreDataManager to manage core data stacks
 struct CoreDataManager {
     
     static let shared = CoreDataManager()
     let viewContext = PersistenceController.shared.container.viewContext
     
+    
+    /// Function to retriev data from Coredata when application launches
+    /// - Returns: array of model
     func getFavouritePlaceModels() -> [FavouritePlaceDataModel]? {
         let fetchRequest: NSFetchRequest<FavouritePlaceModel> = FavouritePlaceModel.fetchRequest()
         fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \FavouritePlaceModel.location, ascending: true)]
@@ -36,6 +40,9 @@ struct CoreDataManager {
         }
     }
     
+    
+    /// Function to add entry in core data
+    /// - Parameter favouritePlaceDataModel: model containing all information.
     func addItem(favouritePlaceDataModel: FavouritePlaceDataModel) {
         let _ = convertDataModelToCoreDataModel(favouritePlaceDataModel: favouritePlaceDataModel)
         do {
@@ -48,6 +55,9 @@ struct CoreDataManager {
         }
     }
     
+    
+    /// Function to update any new values when user changed information
+    /// - Parameter favouritePlaceDataModels: model containing all information.
     func syncCoreData(favouritePlaceDataModels: [FavouritePlaceDataModel]) {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "FavouritePlaceModel")
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
@@ -62,6 +72,10 @@ struct CoreDataManager {
         }
     }
     
+    
+    /// Function to convert local structure to CoreData Model
+    /// - Parameter favouritePlaceDataModel: Local stuct model
+    /// - Returns: Core data model
     func convertDataModelToCoreDataModel(favouritePlaceDataModel: FavouritePlaceDataModel) -> FavouritePlaceModel {
         let favouritePlaceModel = FavouritePlaceModel(context: viewContext)
         favouritePlaceModel.id = favouritePlaceDataModel.id

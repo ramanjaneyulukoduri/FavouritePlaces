@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ChildView: View {
+    ///Variables to get data from master view and to keep track of user entry
     @State var favouritePlaceModel: FavouritePlaceDataModel
     @Binding var favouritePlaceModels: [FavouritePlaceDataModel]
     @State var isEditing: Bool = false
@@ -41,6 +42,8 @@ struct ChildView: View {
             }
     }
     
+    
+    /// Get initial values from master view and show in parent view
     func syncDataFromModel() {
         cityNameTextField = favouritePlaceModel.location ?? ""
         locationTextField = favouritePlaceModel.locationDescription ?? ""
@@ -60,11 +63,16 @@ struct ChildView: View {
         }
     }
     
+    
+    /// View to display when user is in edit more
+    /// - Returns: Edit more view
     func showEditModeView() -> some View {
         List {
+            
             TextField("Enter City Name", text: $cityNameTextField)
             TextField("Enter Image URL", text: $imageURLTextField)
             Text("Enter Location Details: ")
+                .fontWeight(.bold)
             TextField("Enter Location", text: $locationTextField)
             HStack {
                 Text("Latitude: ")
@@ -77,6 +85,8 @@ struct ChildView: View {
         }
     }
     
+    
+    /// Function to save data in model and save it in core data
     func saveDataInModel() {
         favouritePlaceModel.location = cityNameTextField
         favouritePlaceModel.locationDescription = locationTextField
@@ -86,6 +96,8 @@ struct ChildView: View {
         syncMasterModel()
     }
     
+    
+    /// Function to update parent view when user make changes in child view
     func syncMasterModel() {
         favouritePlaceModels = favouritePlaceModels.map({ favouritePlaceDataModel in
             if favouritePlaceDataModel.id == favouritePlaceModel.id {
@@ -96,6 +108,9 @@ struct ChildView: View {
         CoreDataManager.shared.syncCoreData(favouritePlaceDataModels: favouritePlaceModels)
     }
     
+    
+    /// Function to create nonedit mode view where user can not edit anything
+    /// - Returns: Non edit more view
     func showNonEditModeView() -> some View {
         List {
             ImageView(imageURL: imageURLTextField,

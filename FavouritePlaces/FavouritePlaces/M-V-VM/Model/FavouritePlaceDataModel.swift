@@ -8,6 +8,8 @@
 import Foundation
 import Combine
 
+
+/// Structure to store data for master and chid view
 struct FavouritePlaceDataModel: Identifiable {
     var id: UUID
     var imageURL: String?

@@ -9,8 +9,8 @@ import SwiftUI
 
 struct MasterView: View {
     
+    ///State variable to update SwiftUI View
     @State var favouritePlaceModels: [FavouritePlaceDataModel] = []
-    let viewContext = PersistenceController.shared.container.viewContext
     
     var body: some View {
         NavigationView {
@@ -39,22 +39,30 @@ struct MasterView: View {
         }
     }
     
-    func syncWithCoreData() {
-        CoreDataManager.shared.syncCoreData(favouritePlaceDataModels: favouritePlaceModels)
-    }
     
+    /// Function to get data from core data when view appears
     func updateFavouritePlaceModels() {
         favouritePlaceModels = CoreDataManager.shared.getFavouritePlaceModels() ?? []
     }
     
+    /// Function to update coredata model
+    func syncWithCoreData() {
+        CoreDataManager.shared.syncCoreData(favouritePlaceDataModels: favouritePlaceModels)
+    }
+    
+    
+    /// Function to add new default entry
     private func addItem() {
         withAnimation {
             favouritePlaceModels.append(FavouritePlaceDataModel(id: UUID(),
-                                                                location: "New Object \(favouritePlaceModels.count) "))
+                                                                location: "New Places \(favouritePlaceModels.count) "))
         }
         syncWithCoreData()
     }
     
+    
+    /// function to delete entry from screen and coredata
+    /// - Parameter offsets: index of deleted item
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
             favouritePlaceModels.remove(atOffsets: offsets)
