@@ -36,7 +36,8 @@ struct CoreDataManager {
         }
     }
     
-    func addItem() {
+    func addItem(favouritePlaceDataModel: FavouritePlaceDataModel) {
+        let _ = convertDataModelToCoreDataModel(favouritePlaceDataModel: favouritePlaceDataModel)
         do {
             try viewContext.save()
         } catch {
@@ -65,7 +66,7 @@ struct CoreDataManager {
     }
     
     func convertDataModelToCoreDataModel(favouritePlaceDataModel: FavouritePlaceDataModel) -> FavouritePlaceModel {
-        let favouritePlaceModel = FavouritePlaceModel()
+        let favouritePlaceModel = FavouritePlaceModel(context: viewContext)
         favouritePlaceModel.id = favouritePlaceDataModel.id
         favouritePlaceModel.imageURL = favouritePlaceDataModel.imageURL
         favouritePlaceModel.location = favouritePlaceDataModel.location

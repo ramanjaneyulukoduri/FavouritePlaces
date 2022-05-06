@@ -55,7 +55,7 @@ struct ChildView: View {
         favouritePlaceModel.imageURL = imageURLTextField
         favouritePlaceModel.latitude = latitudeTextField
         favouritePlaceModel.longitude = longitudeFieldEntry
-        CoreDataManager.shared.addItem()
+        CoreDataManager.shared.addItem(favouritePlaceDataModel: favouritePlaceModel)
         //favouritePlaceModels = CoreDataManager.getFavouritePlaceModels() ?? []
     }
     /// Show Header view with reset or undo reset button based on user selection.

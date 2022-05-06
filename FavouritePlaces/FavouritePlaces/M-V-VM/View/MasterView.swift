@@ -42,15 +42,14 @@ struct MasterView: View {
     }
     
     func updateFavouritePlaceModels() {
-        //favouritePlaceModels = CoreDataManager.getFavouritePlaceModels() ?? []
+        favouritePlaceModels = CoreDataManager.shared.getFavouritePlaceModels() ?? []
     }
 
     private func addItem() {
         withAnimation {
-            let newItem = FavouritePlaceModel(context: viewContext)
-            newItem.id = UUID()
-            newItem.location = "New Place"
-            CoreDataManager.shared.addItem()
+            let location = "New Place" + "\(favouritePlaceModels.count)"
+            let newItem = FavouritePlaceDataModel(id: UUID(), imageURL: nil, latitude: nil, location: location, enterLocationDetailsText: nil, locationDescription: nil, longitude: nil)
+            CoreDataManager.shared.addItem(favouritePlaceDataModel: newItem)
             updateFavouritePlaceModels()
         }
     }

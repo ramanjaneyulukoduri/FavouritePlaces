@@ -17,7 +17,10 @@ class FavouritePlaceDataModel: ObservableObject, Identifiable {
     var locationDescription: String?
     var longitude: String?
     
-    init(id: UUID, imageURL: String? = nil, latitude: String? = nil, location: String? = nil, enterLocationDetailsText: String? = nil, locationDescription: String? = nil, longitude: String? = nil) {
+    init(id: UUID, imageURL: String? = nil, latitude: String? = nil,
+         location: String? = nil, enterLocationDetailsText: String? = nil,
+         locationDescription: String? = nil, longitude: String? = nil) {
+        
         self.id = id
         self.imageURL = imageURL
         self.latitude = latitude
