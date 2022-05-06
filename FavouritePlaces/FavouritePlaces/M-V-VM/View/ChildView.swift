@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ChildView: View {
     @State var favouritePlaceModel: FavouritePlaceModel
+    @Binding var favouritePlaceModels: [FavouritePlaceModel]
     @State var isEditing: Bool = false
     @State var cityNameTextField: String = ""
     @State var locationTextField: String = ""
@@ -55,7 +56,7 @@ struct ChildView: View {
         HStack {
             Button(isEditing ? StringConstants.done : StringConstants.edit) {
                 self.isEditing.toggle()
-                //syncDataFromModel()
+                saveDataInModel()
             }
         }
     }
@@ -75,6 +76,16 @@ struct ChildView: View {
                 TextField("Text Field", text: $longitudeFieldEntry)
             }
         }
+    }
+    
+    func saveDataInModel() {
+        favouritePlaceModel.location = cityNameTextField
+        favouritePlaceModel.locationDescription = favouritePlaceModel.locationDescription ?? ""
+        favouritePlaceModel.imageURL = imageURLTextField
+        favouritePlaceModel.latitude = latitudeTextField
+        favouritePlaceModel.longitude = longitudeFieldEntry
+        CoreDataManager.shared.addItem()
+        favouritePlaceModels = CoreDataManager.shared.getFavouritePlaceModels() ?? []
     }
     
     func showNonEditModeView() -> some View {
@@ -98,7 +109,7 @@ struct ChildView: View {
 #if DEBUG
 struct ChildView_Previews: PreviewProvider {
     static var previews: some View {
-        ChildView(favouritePlaceModel: FavouritePlaceModel())
+        ChildView(favouritePlaceModel: FavouritePlaceModel(), favouritePlaceModels: .constant([]))
     }
 }
 #endif

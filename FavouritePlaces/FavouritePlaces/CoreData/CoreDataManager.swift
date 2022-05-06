@@ -12,9 +12,9 @@ import CoreData
 struct CoreDataManager {
     
     static let shared = CoreDataManager()
-    static let viewContext = PersistenceController.shared.container.viewContext
+    let viewContext = PersistenceController.shared.container.viewContext
     
-    static func getFavouritePlaceModels() -> [FavouritePlaceModel]? {
+    func getFavouritePlaceModels() -> [FavouritePlaceModel]? {
         let fetchRequest: NSFetchRequest<FavouritePlaceModel> = FavouritePlaceModel.fetchRequest()
         fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \FavouritePlaceModel.id, ascending: true)]
         
@@ -26,7 +26,7 @@ struct CoreDataManager {
         }
     }
     
-    static func addItem() {
+    func addItem() {
         do {
             try viewContext.save()
         } catch {
@@ -38,16 +38,16 @@ struct CoreDataManager {
     }
     
     
-    static func deleteData(offsets: IndexSet, favouritePlaceModels: [FavouritePlaceModel]) {
-            offsets.map { favouritePlaceModels[$0] }.forEach(viewContext.delete)
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
+    func deleteData(offsets: IndexSet, favouritePlaceModels: [FavouritePlaceModel]) {
+        offsets.map { favouritePlaceModels[$0] }.forEach(viewContext.delete)
+        
+        do {
+            try viewContext.save()
+        } catch {
+            // Replace this implementation with code to handle the error appropriately.
+            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            let nsError = error as NSError
+            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        }
     }
 }
