@@ -117,6 +117,15 @@ struct ChildView: View {
                       width: UIScreen.main.bounds.width * 0.8,
                       height: UIScreen.main.bounds.width * 0.8)
             Text(locationTextField)
+            NavigationLink {
+                MapView()
+            } label: {
+                HStack{
+                    ImageView(imageURL: "")
+                    Text("Show Map View")
+                }
+            }
+
             HStack {
                 Text("Latitude: ")
                Text(latitudeTextField)
