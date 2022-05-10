@@ -34,6 +34,7 @@ struct MasterView: View {
                         }
                     }
                 }
+            Text("Select an item")
         }.onAppear {
             updateFavouritePlaceModels()
         }

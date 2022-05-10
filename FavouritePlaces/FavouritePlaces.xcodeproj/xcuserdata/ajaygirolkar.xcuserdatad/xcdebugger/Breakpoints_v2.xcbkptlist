@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "9EAFF9FB-A4E9-4DAA-9175-518719E99A46"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D9B5FE00-A822-485F-ABB5-AEFA474223ED"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FavouritePlaces/M-V-VM/View/ChildView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "115"
+            endingLineNumber = "115"
+            landmarkName = "syncMasterModel()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "34A1A8F9-AD05-4BE7-8614-314E5F707FD5"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FavouritePlaces/M-V-VM/View/ChildView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "129"
+            endingLineNumber = "129"
+            landmarkName = "saveDataInModel()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "34A1A8F9-AD05-4BE7-8614-314E5F707FD5 - 4610d990dee2d579"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; SwiftUI.TupleView&lt;(FavouritePlaces.ImageView, SwiftUI.Text, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text)&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text)&gt;&gt;)&gt; in FavouritePlaces.ChildView.showNonEditModeView() -&gt; some"
+                  moduleName = "FavouritePlaces"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ajaygirolkar/Documents/%20Ram%20Assignment/XcodeProject/FavouritePlaces/FavouritePlaces/FavouritePlaces/FavouritePlaces/M-V-VM/View/ChildView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "105"
+                  endingLineNumber = "105"
+                  offsetFromSymbolStart = "884">
+               </Location>
+               <Location
+                  uuid = "34A1A8F9-AD05-4BE7-8614-314E5F707FD5 - 3d7be3c9f826254b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(FavouritePlaces.ImageView, SwiftUI.Text, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text)&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text)&gt;&gt;)&gt; in FavouritePlaces.ChildView.showNonEditModeView() -&gt; some"
+                  moduleName = "FavouritePlaces"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ajaygirolkar/Documents/%20Ram%20Assignment/XcodeProject/FavouritePlaces/FavouritePlaces/FavouritePlaces/FavouritePlaces/M-V-VM/View/ChildView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "105"
+                  endingLineNumber = "105"
+                  offsetFromSymbolStart = "648">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
