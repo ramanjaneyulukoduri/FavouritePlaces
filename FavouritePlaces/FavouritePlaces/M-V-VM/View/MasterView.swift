@@ -74,6 +74,14 @@ struct MasterView: View {
 
 struct MasterView_Previews: PreviewProvider {
     static var previews: some View {
-        MasterView(favouritePlaceModels: [])
+        MasterView(favouritePlaceModels: [FavouritePlaceDataModel(id: UUID(), imageURL: "https://picsum.photos/id/0/200/300",
+                                                                  latitude: nil, location: nil, enterLocationDetailsText: "Nature",
+                                                                  locationDescription: "", longitude: nil),
+                                          FavouritePlaceDataModel(id: UUID(), imageURL: "https://picsum.photos/id/1018/200/300",
+                                                                                                    latitude: nil, location: nil, enterLocationDetailsText: "Nature",
+                                                                                                    locationDescription: "", longitude: nil),
+                                          FavouritePlaceDataModel(id: UUID(), imageURL: "https://picsum.photos/id/1018/200/300",
+                                                                                                    latitude: nil, location: nil, enterLocationDetailsText: "Nature",
+                                                                                                    locationDescription: "", longitude: nil)])
     }
 }
