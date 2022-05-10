@@ -67,6 +67,7 @@ struct MasterView: View {
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
             favouritePlaceModels.remove(atOffsets: offsets)
+            syncWithCoreData()
         }
     }
 }
