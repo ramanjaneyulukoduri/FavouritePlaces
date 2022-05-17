@@ -24,7 +24,7 @@
 		AB1F493028238ECB001915D3 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1F492F28238ECB001915D3 /* Extensions.swift */; };
 		AB1F493A2824C838001915D3 /* FavouritePlaceDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1F49392824C838001915D3 /* FavouritePlaceDataModel.swift */; };
 		AB2D649B2828C969000AF7D5 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2D649A2828C969000AF7D5 /* MapView.swift */; };
-		AB2D649D2828CC45000AF7D5 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2D649C2828CC45000AF7D5 /* MapViewModel.swift */; };
+		AB2D649D2828CC45000AF7D5 /* FavouritePlaceObservableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2D649C2828CC45000AF7D5 /* FavouritePlaceObservableModel.swift */; };
 		AB2D64A8282A3896000AF7D5 /* CoreDataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2D64A7282A3896000AF7D5 /* CoreDataManagerTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -66,7 +66,7 @@
 		AB1F492F28238ECB001915D3 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		AB1F49392824C838001915D3 /* FavouritePlaceDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritePlaceDataModel.swift; sourceTree = "<group>"; };
 		AB2D649A2828C969000AF7D5 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
-		AB2D649C2828CC45000AF7D5 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
+		AB2D649C2828CC45000AF7D5 /* FavouritePlaceObservableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritePlaceObservableModel.swift; sourceTree = "<group>"; };
 		AB2D64A7282A3896000AF7D5 /* CoreDataManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManagerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -222,7 +222,7 @@
 			isa = PBXGroup;
 			children = (
 				AB1F49392824C838001915D3 /* FavouritePlaceDataModel.swift */,
-				AB2D649C2828CC45000AF7D5 /* MapViewModel.swift */,
+				AB2D649C2828CC45000AF7D5 /* FavouritePlaceObservableModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -367,7 +367,7 @@
 				AB1F491D2820F991001915D3 /* StringConstants.swift in Sources */,
 				AB1F492828223021001915D3 /* CoreDataManager.swift in Sources */,
 				AB1F493A2824C838001915D3 /* FavouritePlaceDataModel.swift in Sources */,
-				AB2D649D2828CC45000AF7D5 /* MapViewModel.swift in Sources */,
+				AB2D649D2828CC45000AF7D5 /* FavouritePlaceObservableModel.swift in Sources */,
 				AB1F493028238ECB001915D3 /* Extensions.swift in Sources */,
 				AB1F48E62820EB1C001915D3 /* FavouritePlacesApp.swift in Sources */,
 			);

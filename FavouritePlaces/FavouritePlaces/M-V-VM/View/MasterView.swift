@@ -10,14 +10,15 @@ import SwiftUI
 struct MasterView: View {
     
     ///State variable to update SwiftUI View
-    @State var favouritePlaceModels: [FavouritePlaceDataModel] = []
+    //@State var favouritePlaceModels: [FavouritePlaceDataModel] = []
+    @ObservedObject var favouritePlaceObservableModel = FavouritePlaceObservableModel()
     
     var body: some View {
         NavigationView {
             List {
-                ForEach(favouritePlaceModels) { item in
+                ForEach(favouritePlaceObservableModel.favouritePlaceModels) { item in
                     NavigationLink {
-                        ChildView(favouritePlaceModel: item, favouritePlaceModels: $favouritePlaceModels)
+                        ChildView(favouritePlaceModel: item, favouritePlaceModels: $favouritePlaceObservableModel.favouritePlaceModels)
                     } label: {
                         ImageItemView(text: item.location ?? "", imageURL: item.imageURL ?? "")
                     }
@@ -36,29 +37,16 @@ struct MasterView: View {
                 }
             Text("Select an item")
         }.onAppear {
-            updateFavouritePlaceModels()
+            favouritePlaceObservableModel.updateFavouritePlaceModels()
         }
     }
-    
-    
-    /// Function to get data from core data when view appears
-    func updateFavouritePlaceModels() {
-        favouritePlaceModels = CoreDataManager.shared.getFavouritePlaceModels() ?? []
-    }
-    
-    /// Function to update coredata model
-    func syncWithCoreData() {
-        CoreDataManager.shared.syncCoreData(favouritePlaceDataModels: favouritePlaceModels)
-    }
-    
+
     
     /// Function to add new default entry
     private func addItem() {
         withAnimation {
-            favouritePlaceModels.append(FavouritePlaceDataModel(id: UUID(),
-                                                                location: "New Places \(favouritePlaceModels.count) "))
+            favouritePlaceObservableModel.addItem()
         }
-        syncWithCoreData()
     }
     
     
@@ -66,22 +54,26 @@ struct MasterView: View {
     /// - Parameter offsets: index of deleted item
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
-            favouritePlaceModels.remove(atOffsets: offsets)
-            syncWithCoreData()
+            favouritePlaceObservableModel.deleteItems(offsets: offsets)
         }
     }
 }
 
 struct MasterView_Previews: PreviewProvider {
+    static let favouritePlaceObservableModel = FavouritePlaceObservableModel()
     static var previews: some View {
-        MasterView(favouritePlaceModels: [FavouritePlaceDataModel(id: UUID(), imageURL: "https://picsum.photos/id/0/200/300",
-                                                                  latitude: nil, location: nil, enterLocationDetailsText: "Nature",
-                                                                  locationDescription: "", longitude: nil),
-                                          FavouritePlaceDataModel(id: UUID(), imageURL: "https://picsum.photos/id/1018/200/300",
-                                                                                                    latitude: nil, location: nil, enterLocationDetailsText: "Nature",
-                                                                                                    locationDescription: "", longitude: nil),
-                                          FavouritePlaceDataModel(id: UUID(), imageURL: "https://picsum.photos/id/1018/200/300",
-                                                                                                    latitude: nil, location: nil, enterLocationDetailsText: "Nature",
-                                                                                                    locationDescription: "", longitude: nil)])
+        VStack {
+            MasterView(favouritePlaceObservableModel: favouritePlaceObservableModel)
+        }.onAppear {
+                favouritePlaceObservableModel.favouritePlaceModels =   [FavouritePlaceDataModel(id: UUID(), imageURL: "https://picsum.photos/id/0/200/300",
+                                                                          latitude: nil, location: nil, enterLocationDetailsText: "Nature",
+                                                                          locationDescription: "", longitude: nil),
+                                                  FavouritePlaceDataModel(id: UUID(), imageURL: "https://picsum.photos/id/1018/200/300",
+                                                                                                            latitude: nil, location: nil, enterLocationDetailsText: "Nature",
+                                                                                                            locationDescription: "", longitude: nil),
+                                                  FavouritePlaceDataModel(id: UUID(), imageURL: "https://picsum.photos/id/1018/200/300",
+                                                                                                            latitude: nil, location: nil, enterLocationDetailsText: "Nature",
+                                                                                                            locationDescription: "", longitude: nil)]
+        }
     }
 }

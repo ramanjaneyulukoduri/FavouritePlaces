@@ -68,12 +68,10 @@ struct MapView: View {
                 HStack {
                     Text("Latitude: ")
                     TextField("Enter City Name", text: $latitudeTextField)
-                        .keyboardType(.decimalPad)
                 }
                 HStack {
                     Text("Longitude: ")
                     TextField("Enter Image URL", text: $longitudeTextField)
-                        .keyboardType(.decimalPad)
                 }
             }.padding()
         }
@@ -82,7 +80,7 @@ struct MapView: View {
     func showNonEditModeView() -> some View {
         VStack(alignment: .leading) {
             getMapView()
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 16) {
                 HStack {
                     Text("Latitude: ")
                     Text("\(region.center.latitude)")
