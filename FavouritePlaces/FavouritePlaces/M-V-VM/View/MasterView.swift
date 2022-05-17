@@ -35,12 +35,9 @@ struct MasterView: View {
                         }
                     }
                 }
-            Text("Select an item")
-        }.onAppear {
-            favouritePlaceObservableModel.updateFavouritePlaceModels()
         }
     }
-
+    
     
     /// Function to add new default entry
     private func addItem() {
@@ -65,15 +62,15 @@ struct MasterView_Previews: PreviewProvider {
         VStack {
             MasterView(favouritePlaceObservableModel: favouritePlaceObservableModel)
         }.onAppear {
-                favouritePlaceObservableModel.favouritePlaceModels =   [FavouritePlaceDataModel(id: UUID(), imageURL: "https://picsum.photos/id/0/200/300",
-                                                                          latitude: nil, location: nil, enterLocationDetailsText: "Nature",
-                                                                          locationDescription: "", longitude: nil),
-                                                  FavouritePlaceDataModel(id: UUID(), imageURL: "https://picsum.photos/id/1018/200/300",
-                                                                                                            latitude: nil, location: nil, enterLocationDetailsText: "Nature",
-                                                                                                            locationDescription: "", longitude: nil),
-                                                  FavouritePlaceDataModel(id: UUID(), imageURL: "https://picsum.photos/id/1018/200/300",
-                                                                                                            latitude: nil, location: nil, enterLocationDetailsText: "Nature",
-                                                                                                            locationDescription: "", longitude: nil)]
+            favouritePlaceObservableModel.favouritePlaceModels =   [FavouritePlaceDataModel(id: UUID(), imageURL: "https://picsum.photos/id/0/200/300",
+                                                                                            latitude: nil, location: nil, enterLocationDetailsText: "Nature",
+                                                                                            locationDescription: "", longitude: nil),
+                                                                    FavouritePlaceDataModel(id: UUID(), imageURL: "https://picsum.photos/id/1018/200/300",
+                                                                                            latitude: nil, location: nil, enterLocationDetailsText: "Nature",
+                                                                                            locationDescription: "", longitude: nil),
+                                                                    FavouritePlaceDataModel(id: UUID(), imageURL: "https://picsum.photos/id/1018/200/300",
+                                                                                            latitude: nil, location: nil, enterLocationDetailsText: "Nature",
+                                                                                            locationDescription: "", longitude: nil)]
         }
     }
 }

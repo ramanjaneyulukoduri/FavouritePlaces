@@ -12,6 +12,10 @@ final class FavouritePlaceObservableModel: ObservableObject {
     
     @Published var searchBarText = ""
     @Published var favouritePlaceModels: [FavouritePlaceDataModel] = []
+    
+    init() {
+        updateFavouritePlaceModels()
+    }
    
     /// Function to get data from core data when view appears
     func updateFavouritePlaceModels() {
