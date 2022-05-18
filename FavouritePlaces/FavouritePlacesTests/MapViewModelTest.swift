@@ -51,7 +51,8 @@ class MapViewModelTest: XCTestCase {
     func testSyncMasterModel() {
         guard let mapViewViewModel = mapViewViewModel else { return }
         let favouritePlaceModel = FavouritePlaceDataModel(id: UUID(), imageURL: "", location: "Test Location",
-                                                          enterLocationDetailsText: "TestModel", locationDescription: "", latitude: "30.0", longitude: "20.0")
+                                                          enterLocationDetailsText: "TestModel", locationDescription: "",
+                                                          latitude: "30.0", longitude: "20.0")
         
         mapViewViewModel.favouritePlaceModel = favouritePlaceModel
         mapViewViewModel.favouritePlaceObservableModel = FavouritePlaceObservableModel()
