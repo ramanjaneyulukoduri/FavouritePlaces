@@ -64,14 +64,14 @@ struct MasterView_Previews: PreviewProvider {
             MasterView(favouritePlaceObservableModel: favouritePlaceObservableModel)
         }.onAppear {
             favouritePlaceObservableModel.favouritePlaceModels =   [FavouritePlaceDataModel(id: UUID(), imageURL: "https://picsum.photos/id/0/200/300",
-                                                                                            latitude: nil, location: nil, enterLocationDetailsText: "Nature",
-                                                                                            locationDescription: "", longitude: nil),
+                                                                                          location: nil, enterLocationDetailsText: "Nature",
+                                                                                            locationDescription: "",   latitude: nil, longitude: nil),
                                                                     FavouritePlaceDataModel(id: UUID(), imageURL: "https://picsum.photos/id/1018/200/300",
-                                                                                            latitude: nil, location: nil, enterLocationDetailsText: "Nature",
-                                                                                            locationDescription: "", longitude: nil),
+                                                                                             location: nil, enterLocationDetailsText: "Nature",
+                                                                                            locationDescription: "", latitude: nil, longitude: nil),
                                                                     FavouritePlaceDataModel(id: UUID(), imageURL: "https://picsum.photos/id/1018/200/300",
-                                                                                            latitude: nil, location: nil, enterLocationDetailsText: "Nature",
-                                                                                            locationDescription: "", longitude: nil)]
+                                                                                            location: nil, enterLocationDetailsText: "Nature",
+                                                                                            locationDescription: "",  latitude: nil, longitude: nil)]
         }
     }
 }

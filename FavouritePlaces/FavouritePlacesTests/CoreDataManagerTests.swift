@@ -20,7 +20,7 @@ class CoreDataManagerTests: XCTestCase {
 
     func testAddItem() {
         let id = UUID()
-        let favouritePlaceDataModel = FavouritePlaceDataModel(id: id, imageURL: "", latitude: "", location: "Sydney", enterLocationDetailsText: "", locationDescription: "", longitude: "")
+        let favouritePlaceDataModel = FavouritePlaceDataModel(id: id, imageURL: "",  location: "Sydney", enterLocationDetailsText: "", locationDescription: "", latitude: "", longitude: "")
         CoreDataManager.shared.addItem(favouritePlaceDataModel: favouritePlaceDataModel)
         var isElementAdded = false
         if let getFavouriteModel =  CoreDataManager.shared.getFavouritePlaceModels() {
@@ -40,7 +40,7 @@ class CoreDataManagerTests: XCTestCase {
     
     func testConvertDataModelToCoreDataModel() {
         let id = UUID()
-        let favouritePlaceDataModel = FavouritePlaceDataModel(id: id, imageURL: "", latitude: "", location: "Sydney", enterLocationDetailsText: "", locationDescription: "", longitude: "")
+        let favouritePlaceDataModel = FavouritePlaceDataModel(id: id, imageURL: "",  location: "Sydney", enterLocationDetailsText: "", locationDescription: "", latitude: "", longitude: "")
         
         let convertedModel = CoreDataManager.shared.convertDataModelToCoreDataModel(favouritePlaceDataModel: favouritePlaceDataModel)
         

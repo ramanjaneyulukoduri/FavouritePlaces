@@ -27,10 +27,10 @@ struct CoreDataManager {
             let favouritePlaceDataModels = favouritePlaceModels.map { favouritePlaceModel in
                 return FavouritePlaceDataModel(id: favouritePlaceModel.id ?? UUID(),
                                                imageURL: favouritePlaceModel.imageURL,
-                                               latitude: favouritePlaceModel.latitude,
                                                location: favouritePlaceModel.location,
                                                enterLocationDetailsText: favouritePlaceModel.enterLocationDetailsText,
                                                locationDescription: favouritePlaceModel.locationDescription,
+                                               latitude: favouritePlaceModel.latitude,
                                                longitude: favouritePlaceModel.longitude)
             }
             return favouritePlaceDataModels

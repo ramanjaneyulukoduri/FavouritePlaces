@@ -9,7 +9,7 @@ import SwiftUI
 import MapKit
 
 class MapViewViewModel: ObservableObject {
-    var favouritePlaceModel: FavouritePlaceDataModel = FavouritePlaceDataModel(id: UUID(), imageURL: "", latitude: "", location: "", enterLocationDetailsText: "", locationDescription: "", longitude: "")
+    var favouritePlaceModel: FavouritePlaceDataModel = FavouritePlaceDataModel(id: UUID(), imageURL: "",  location: "", enterLocationDetailsText: "", locationDescription: "", latitude: "", longitude: "")
     @ObservedObject var favouritePlaceObservableModel: FavouritePlaceObservableModel = FavouritePlaceObservableModel()
     @Published var latitudeTextField: String = "35.0"
     @Published var longitudeTextField: String = "35.0"
@@ -24,14 +24,16 @@ class MapViewViewModel: ObservableObject {
         region.center.longitude = Double(longitudeTextField) ?? region.center.longitude
     }
     
+    ///Done button action
     func doneButtonAction() {
         region.center.latitude = Double(latitudeTextField) ?? region.center.latitude
         region.center.longitude = Double(longitudeTextField) ?? region.center.longitude
     }
     
+    ///Update parent model when map view disappear
     func syncMasterModel() {
-        favouritePlaceModel.latitude = latitudeTextField
-        favouritePlaceModel.longitude = longitudeTextField
+        favouritePlaceModel.latitude = "\(region.center.latitude)"
+        favouritePlaceModel.longitude =  "\(region.center.longitude)"
         for (index, item) in favouritePlaceObservableModel.favouritePlaceModels.enumerated() {
             if item.id == favouritePlaceModel.id {
                 favouritePlaceObservableModel.favouritePlaceModels[index] = favouritePlaceModel
