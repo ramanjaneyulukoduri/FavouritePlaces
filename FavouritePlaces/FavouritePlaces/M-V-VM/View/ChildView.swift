@@ -31,6 +31,7 @@ struct ChildView: View {
             }
         }.onReceive(favouritePlaceObservableModel.$favouritePlaceModels, perform: { items in
             favouritePlaceModel = items.filter{$0.id == favouritePlaceModel.id}.last ?? favouritePlaceModel
+            syncDataFromModel()
         })
         .onAppear {
             syncDataFromModel()
@@ -79,21 +80,21 @@ struct ChildView: View {
     func showEditModeView() -> some View {
         List {
             
-            TextField("Enter City Name", text: $childViewModel.cityNameTextField)
-            TextField("Enter Image URL", text: $childViewModel.imageURLTextField)
-            Text("Enter Location Details: ")
+            TextField(StringConstants.enterCityName, text: $childViewModel.cityNameTextField)
+            TextField(StringConstants.enterImageURL, text: $childViewModel.imageURLTextField)
+            Text(StringConstants.enterLocationDetails)
                 .fontWeight(.bold)
-            TextField("Enter Location", text: $childViewModel.locationTextField)
+            TextField(StringConstants.enterLocation, text: $childViewModel.locationTextField)
             HStack {
-                Text("Latitude: ")
-                TextField("Text Field", text: $childViewModel.latitudeTextField)
+                Text(StringConstants.latitude)
+                TextField(StringConstants.textField, text: $childViewModel.latitudeTextField)
                     .onChange(of: childViewModel.latitudeTextField) { newValue in
                         favouritePlaceModel.latitude = newValue
                     }
             }
             HStack {
-                Text("Longitude: ")
-                TextField("Text Field", text: $childViewModel.longitudeFieldEntry)
+                Text(StringConstants.longitude)
+                TextField(StringConstants.textField, text: $childViewModel.longitudeFieldEntry)
                     .onChange(of: childViewModel.longitudeFieldEntry) { newValue in
                         favouritePlaceModel.longitude = newValue
                     }
@@ -138,17 +139,17 @@ struct ChildView: View {
             } label: {
                 HStack{
                     ImageView(imageURL: "")
-                    Text("Show Map View")
+                    Text(StringConstants.showMapView)
                 }
             }
 
             HStack {
-                Text("Latitude: ")
-                Text(childViewModel.latitudeTextField)
+                Text(StringConstants.latitude)
+                Text(favouritePlaceModel.latitude ?? "0.0")
             }
             HStack {
-                Text("Longitude: ")
-                Text(childViewModel.longitudeFieldEntry)
+                Text(StringConstants.longitude)
+                Text(favouritePlaceModel.longitude ?? "0.0")
             }
         }
     }

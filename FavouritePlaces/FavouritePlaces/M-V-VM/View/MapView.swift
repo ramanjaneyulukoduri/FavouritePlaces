@@ -9,8 +9,7 @@ import SwiftUI
 import MapKit
 
 struct MapView: View {
-    let latitue: Double = 35.00
-    let longitude: Double = 36.00
+    
     @State var isEditing: Bool = false
     @Binding var favouritePlaceModel: FavouritePlaceDataModel
     @ObservedObject var favouritePlaceObservableModel: FavouritePlaceObservableModel
@@ -30,7 +29,7 @@ struct MapView: View {
             syncDataFromModel()
         }).onDisappear(perform: {
             syncMasterModel()
-        }).navigationTitle("Welcome to map view")
+        }).navigationTitle(StringConstants.mapOf + (favouritePlaceModel.location ?? ""))
             .toolbar {
                 //To show buttons in navigation bar
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -43,13 +42,14 @@ struct MapView: View {
                     }
                 }
             }
-        
     }
     
     /// Get initial values from master view and show in parent view
     func syncDataFromModel() {
         latitudeTextField = favouritePlaceModel.latitude ?? "0.0"
         longitudeTextField = favouritePlaceModel.longitude ?? "0.0"
+        region.center.latitude = Double(latitudeTextField) ?? region.center.latitude
+        region.center.longitude = Double(longitudeTextField) ?? region.center.longitude
     }
     /// Show Header view with reset or undo reset button based on user selection.
     /// - Returns: view
@@ -67,10 +67,11 @@ struct MapView: View {
     func doneButtonAction() {
         region.center.latitude = Double(latitudeTextField) ?? region.center.latitude
         region.center.longitude = Double(longitudeTextField) ?? region.center.longitude
-        
     }
     
     func syncMasterModel() {
+        favouritePlaceModel.latitude = latitudeTextField
+        favouritePlaceModel.longitude = longitudeTextField
         for (index, item) in favouritePlaceObservableModel.favouritePlaceModels.enumerated() {
             if item.id == favouritePlaceModel.id {
                 favouritePlaceObservableModel.favouritePlaceModels[index] = favouritePlaceModel
@@ -85,12 +86,12 @@ struct MapView: View {
             getMapView()
             VStack(alignment: .leading) {
                 HStack {
-                    Text("Latitude: ")
-                    TextField("Enter City Name", text: $latitudeTextField)
+                    Text(StringConstants.latitude)
+                    TextField(StringConstants.enterCityName, text: $latitudeTextField)
                 }
                 HStack {
-                    Text("Longitude: ")
-                    TextField("Enter Image URL", text: $longitudeTextField)
+                    Text(StringConstants.longitude)
+                    TextField(StringConstants.enterImageURL, text: $longitudeTextField)
                 }
             }.padding()
         }
@@ -101,18 +102,12 @@ struct MapView: View {
             getMapView()
             VStack(alignment: .leading, spacing: 16) {
                 HStack {
-                    Text("Latitude: ")
+                    Text(StringConstants.latitude)
                     Text("\(region.center.latitude)")
-                        .onChange(of: region.center.latitude) { newValue in
-                            latitudeTextField = "\(newValue)"
-                        }
                 }
                 HStack {
-                    Text("Longitude: ")
+                    Text(StringConstants.longitude)
                     Text("\(region.center.longitude)")
-                        .onChange(of: region.center.longitude) { newValue in
-                            longitudeTextField = "\(newValue)"
-                        }
                 }
             }.padding()
         }
