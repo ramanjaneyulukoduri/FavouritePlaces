@@ -12,8 +12,10 @@ struct MapView: View {
     let latitue: Double = 35.00
     let longitude: Double = 36.00
     @State var isEditing: Bool = false
-    @State var latitudeTextField: String = "35.00"
-    @State var longitudeTextField: String = "36.00"
+    @Binding var favouritePlaceModel: FavouritePlaceDataModel
+    @ObservedObject var favouritePlaceObservableModel: FavouritePlaceObservableModel
+    @State var latitudeTextField: String = "35.0"
+    @State var longitudeTextField: String = "35.0"
     @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0),
                                                    span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
     
@@ -24,7 +26,11 @@ struct MapView: View {
             } else {
                 showNonEditModeView()
             }
-        }.navigationTitle("Welcome to map view")
+        }.onAppear(perform: {
+            syncDataFromModel()
+        }).onDisappear(perform: {
+            syncMasterModel()
+        }).navigationTitle("Welcome to map view")
             .toolbar {
                 //To show buttons in navigation bar
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -40,6 +46,11 @@ struct MapView: View {
         
     }
     
+    /// Get initial values from master view and show in parent view
+    func syncDataFromModel() {
+        latitudeTextField = favouritePlaceModel.latitude ?? "0.0"
+        longitudeTextField = favouritePlaceModel.longitude ?? "0.0"
+    }
     /// Show Header view with reset or undo reset button based on user selection.
     /// - Returns: view
     func addEditModeHeaderView () -> some View {
@@ -57,6 +68,14 @@ struct MapView: View {
         region.center.latitude = Double(latitudeTextField) ?? region.center.latitude
         region.center.longitude = Double(longitudeTextField) ?? region.center.longitude
         
+    }
+    
+    func syncMasterModel() {
+        for (index, item) in favouritePlaceObservableModel.favouritePlaceModels.enumerated() {
+            if item.id == favouritePlaceModel.id {
+                favouritePlaceObservableModel.favouritePlaceModels[index] = favouritePlaceModel
+            }
+        }
     }
     
     /// View to display when user is in edit more
@@ -84,10 +103,16 @@ struct MapView: View {
                 HStack {
                     Text("Latitude: ")
                     Text("\(region.center.latitude)")
+                        .onChange(of: region.center.latitude) { newValue in
+                            latitudeTextField = "\(newValue)"
+                        }
                 }
                 HStack {
                     Text("Longitude: ")
                     Text("\(region.center.longitude)")
+                        .onChange(of: region.center.longitude) { newValue in
+                            longitudeTextField = "\(newValue)"
+                        }
                 }
             }.padding()
         }
@@ -101,7 +126,7 @@ struct MapView: View {
 
 struct MapView_Previews: PreviewProvider {
     static var previews: some View {
-        MapView()
+        MapView(favouritePlaceModel: .constant(FavouritePlaceDataModel(id: UUID(), imageURL: "", latitude: "", location: "", enterLocationDetailsText: "", locationDescription: "", longitude: "")), favouritePlaceObservableModel: FavouritePlaceObservableModel())
     }
 }
 

@@ -18,7 +18,8 @@ struct MasterView: View {
             List {
                 ForEach(favouritePlaceObservableModel.favouritePlaceModels) { item in
                     NavigationLink {
-                        ChildView(favouritePlaceModel: item, favouritePlaceModels: $favouritePlaceObservableModel.favouritePlaceModels)
+                        ChildView(favouritePlaceModel: item,
+                                  favouritePlaceObservableModel: favouritePlaceObservableModel)
                     } label: {
                         ImageItemView(text: item.location ?? "", imageURL: item.imageURL ?? "")
                     }
