@@ -21,6 +21,7 @@ struct ChildView: View {
     @State var favouritePlaceModel: FavouritePlaceDataModel
     @ObservedObject var favouritePlaceObservableModel = FavouritePlaceObservableModel()
     @State var childViewModel = ChildViewModel()
+    @StateObject var mapViewViewModel = MapViewViewModel()
     
     var body: some View {
         VStack {
@@ -56,6 +57,8 @@ struct ChildView: View {
     
     /// Get initial values from master view and show in parent view
     func syncDataFromModel() {
+        mapViewViewModel.favouritePlaceModel = favouritePlaceModel
+        mapViewViewModel.favouritePlaceObservableModel = favouritePlaceObservableModel
         childViewModel.cityNameTextField = favouritePlaceModel.location ?? ""
         childViewModel.locationTextField = favouritePlaceModel.locationDescription ?? ""
         childViewModel.imageURLTextField = favouritePlaceModel.imageURL ?? ""
@@ -134,8 +137,8 @@ struct ChildView: View {
                       height: UIScreen.main.bounds.width * 0.8)
             Text(childViewModel.locationTextField)
             NavigationLink {
-                MapView(favouritePlaceModel: $favouritePlaceModel,
-                        favouritePlaceObservableModel: favouritePlaceObservableModel)
+                MapView()
+                    .environmentObject(mapViewViewModel)
             } label: {
                 HStack{
                     ImageView(imageURL: "")

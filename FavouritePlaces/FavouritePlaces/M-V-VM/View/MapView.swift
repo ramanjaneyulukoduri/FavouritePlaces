@@ -10,13 +10,8 @@ import MapKit
 
 struct MapView: View {
     
+    @EnvironmentObject var  mapViewViewModel: MapViewViewModel
     @State var isEditing: Bool = false
-    @Binding var favouritePlaceModel: FavouritePlaceDataModel
-    @ObservedObject var favouritePlaceObservableModel: FavouritePlaceObservableModel
-    @State var latitudeTextField: String = "35.0"
-    @State var longitudeTextField: String = "35.0"
-    @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0),
-                                                   span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -26,10 +21,10 @@ struct MapView: View {
                 showNonEditModeView()
             }
         }.onAppear(perform: {
-            syncDataFromModel()
+            mapViewViewModel.syncDataFromModel()
         }).onDisappear(perform: {
-            syncMasterModel()
-        }).navigationTitle(StringConstants.mapOf + (favouritePlaceModel.location ?? ""))
+            mapViewViewModel.syncMasterModel()
+        }).navigationTitle(StringConstants.mapOf + (mapViewViewModel.favouritePlaceModel.location ?? ""))
             .toolbar {
                 //To show buttons in navigation bar
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -37,44 +32,28 @@ struct MapView: View {
                         addEditModeHeaderView()
                     } else {
                         Button(StringConstants.edit) {
-                            self.isEditing.toggle()
+                            isEditing.toggle()
                         }
                     }
                 }
             }
     }
     
-    /// Get initial values from master view and show in parent view
-    func syncDataFromModel() {
-        latitudeTextField = favouritePlaceModel.latitude ?? "0.0"
-        longitudeTextField = favouritePlaceModel.longitude ?? "0.0"
-        region.center.latitude = Double(latitudeTextField) ?? region.center.latitude
-        region.center.longitude = Double(longitudeTextField) ?? region.center.longitude
+    func getMapView() -> some View {
+        VStack {
+            Map(coordinateRegion: $mapViewViewModel.region)
+        }
     }
+    
     /// Show Header view with reset or undo reset button based on user selection.
     /// - Returns: view
     func addEditModeHeaderView () -> some View {
         HStack {
             Button(isEditing ? StringConstants.done : StringConstants.edit) {
                 if isEditing {
-                    doneButtonAction()
+                    mapViewViewModel.doneButtonAction()
                 }
-                self.isEditing.toggle()
-            }
-        }
-    }
-    
-    func doneButtonAction() {
-        region.center.latitude = Double(latitudeTextField) ?? region.center.latitude
-        region.center.longitude = Double(longitudeTextField) ?? region.center.longitude
-    }
-    
-    func syncMasterModel() {
-        favouritePlaceModel.latitude = latitudeTextField
-        favouritePlaceModel.longitude = longitudeTextField
-        for (index, item) in favouritePlaceObservableModel.favouritePlaceModels.enumerated() {
-            if item.id == favouritePlaceModel.id {
-                favouritePlaceObservableModel.favouritePlaceModels[index] = favouritePlaceModel
+                isEditing.toggle()
             }
         }
     }
@@ -87,11 +66,11 @@ struct MapView: View {
             VStack(alignment: .leading) {
                 HStack {
                     Text(StringConstants.latitude)
-                    TextField(StringConstants.enterCityName, text: $latitudeTextField)
+                    TextField(StringConstants.enterCityName, text: $mapViewViewModel.latitudeTextField)
                 }
                 HStack {
                     Text(StringConstants.longitude)
-                    TextField(StringConstants.enterImageURL, text: $longitudeTextField)
+                    TextField(StringConstants.enterImageURL, text: $mapViewViewModel.longitudeTextField)
                 }
             }.padding()
         }
@@ -103,25 +82,21 @@ struct MapView: View {
             VStack(alignment: .leading, spacing: 16) {
                 HStack {
                     Text(StringConstants.latitude)
-                    Text("\(region.center.latitude)")
+                    Text("\(mapViewViewModel.region.center.latitude)")
                 }
                 HStack {
                     Text(StringConstants.longitude)
-                    Text("\(region.center.longitude)")
+                    Text("\(mapViewViewModel.region.center.longitude)")
                 }
             }.padding()
-        }
-    }
-    func getMapView() -> some View {
-        VStack {
-            Map(coordinateRegion: $region)
         }
     }
 }
 
 struct MapView_Previews: PreviewProvider {
     static var previews: some View {
-        MapView(favouritePlaceModel: .constant(FavouritePlaceDataModel(id: UUID(), imageURL: "", latitude: "", location: "", enterLocationDetailsText: "", locationDescription: "", longitude: "")), favouritePlaceObservableModel: FavouritePlaceObservableModel())
+        MapView()
+            .environmentObject(MapViewViewModel())
     }
 }
 
