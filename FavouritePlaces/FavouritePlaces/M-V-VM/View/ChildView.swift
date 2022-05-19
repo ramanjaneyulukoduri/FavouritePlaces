@@ -141,7 +141,7 @@ struct ChildView: View {
                     .environmentObject(mapViewViewModel)
             } label: {
                 HStack{
-                    ImageView(imageURL: "")
+                    Image(systemName: "mappin.slash.circle")
                     Text(StringConstants.showMapView)
                 }
             }
