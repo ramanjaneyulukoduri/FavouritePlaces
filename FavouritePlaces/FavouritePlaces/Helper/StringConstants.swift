@@ -22,5 +22,13 @@ struct StringConstants {
     static let enterLocationDetails = "Enter Location Details: "
     static let enterLocation = "Enter Location"
     static let textField = "Text Field"
+}
 
+struct ImageName {
+    static let sunrise = "sunrise"
+    static let sunset = "sunset"
+    static let magnifyingGlass = "text.magnifyingglass"
+    static let questionMark = "questionmark.square.dashed"
+    static let globeImage = "globe.europe.africa.fill"
+    static let circle = "mappin.slash.circle"
 }

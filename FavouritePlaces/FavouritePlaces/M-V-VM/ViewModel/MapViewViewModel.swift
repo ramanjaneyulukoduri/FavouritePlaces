@@ -34,10 +34,21 @@ class MapViewViewModel: ObservableObject {
     func syncMasterModel() {
         favouritePlaceModel.latitude = "\(region.center.latitude)"
         favouritePlaceModel.longitude =  "\(region.center.longitude)"
-        for (index, item) in favouritePlaceObservableModel.favouritePlaceModels.enumerated() {
-            if item.id == favouritePlaceModel.id {
-                favouritePlaceObservableModel.favouritePlaceModels[index] = favouritePlaceModel
+        getNetworkData {
+            for (index, item) in self.favouritePlaceObservableModel.favouritePlaceModels.enumerated() {
+                if item.id == self.favouritePlaceModel.id {
+                    self.favouritePlaceObservableModel.favouritePlaceModels[index] = self.favouritePlaceModel
+                }
             }
+        }
+    }
+    
+    func getNetworkData(completion: @escaping () -> ()) {
+        NetworkManager.shared.getWeatherInformation(latitude: favouritePlaceModel.latitude ?? "",
+                                                    longitude: favouritePlaceModel.longitude ?? "") { [self] weatherInformation, error in
+            self.favouritePlaceModel.sunrise = weatherInformation?.sunrise ?? ""
+            self.favouritePlaceModel.sunset = weatherInformation?.sunset ?? ""
+            completion()
         }
     }
 }

@@ -18,4 +18,6 @@ struct FavouritePlaceDataModel: Identifiable {
     var locationDescription: String?
     var latitude: String?
     var longitude: String?
+    var sunrise: String?
+    var sunset: String?
 }
