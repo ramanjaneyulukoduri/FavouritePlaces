@@ -19,7 +19,18 @@ final class FavouritePlaceObservableModel: ObservableObject {
    
     /// Function to get data from core data when view appears
     func updateFavouritePlaceModels() {
-        favouritePlaceModels = CoreDataManager.shared.getFavouritePlaceModels() ?? []
+        if let models = CoreDataManager.shared.getFavouritePlaceModels(), models.count > 0 {
+            favouritePlaceModels = models
+        } else {
+            favouritePlaceModels = getDemoEntries()
+        }
+    }
+    
+    func getDemoEntries() -> [FavouritePlaceDataModel] {
+        let demoEntries = [FavouritePlaceDataModel(id: UUID(), imageURL: "https://picsum.photos/id/1018/200/300", location: "Amazon", enterLocationDetailsText: "Enter Location Details: ", locationDescription: "Nature", latitude: "-32.0", longitude: "151.28"),
+                           FavouritePlaceDataModel(id: UUID(), imageURL: "https://picsum.photos/id/1018/200/300", location: "Wild", enterLocationDetailsText: "Enter Location Details: ", locationDescription: "Natural environment", latitude: "-32.0", longitude: "151.28"),
+                           FavouritePlaceDataModel(id: UUID(), imageURL: "https://picsum.photos/id/1018/200/300", location: "Forest", enterLocationDetailsText: "Enter Location Details: ", locationDescription: "Natural environment", latitude: "-32.0", longitude: "151.28")]
+        return demoEntries
     }
     
     /// Function to update coredata model
