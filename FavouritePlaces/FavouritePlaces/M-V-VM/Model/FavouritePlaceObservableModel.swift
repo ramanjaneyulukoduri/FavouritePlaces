@@ -8,7 +8,7 @@
 import Combine
 import CoreLocation
 
-final class FavouritePlaceObservableModel: ObservableObject {
+@MainActor final class FavouritePlaceObservableModel: ObservableObject {
     
     @Published var searchBarText = ""
     @Published var favouritePlaceModels: [FavouritePlaceDataModel] = []

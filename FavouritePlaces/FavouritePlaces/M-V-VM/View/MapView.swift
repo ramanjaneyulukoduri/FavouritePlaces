@@ -12,7 +12,8 @@ struct MapView: View {
     
     @EnvironmentObject var  mapViewViewModel: MapViewViewModel
     @State var isEditing: Bool = false
-    
+    @State private var searchText = ""
+    @State private var showCancelButton: Bool = false
     var body: some View {
         VStack(alignment: .leading) {
             if isEditing {
@@ -62,6 +63,7 @@ struct MapView: View {
     /// - Returns: Edit more view
     func showEditModeView() -> some View {
         VStack(alignment: .leading) {
+            showSearchView()
             getMapView()
             VStack(alignment: .leading) {
                 HStack {
@@ -90,6 +92,30 @@ struct MapView: View {
                 }
             }.padding()
         }
+    }
+    
+    func showSearchView() -> some View {
+        HStack {
+            HStack {
+                Image(systemName: ImageName.magnifyingGlass)
+                    .foregroundColor(.blue)
+                TextField("search", text: $searchText, onEditingChanged: { isEditing in
+                    self.showCancelButton = true
+                }, onCommit: {
+                    print("onCommit")
+                }).foregroundColor(.primary)
+                
+                Button(action: {
+                    self.searchText = ""
+                }) {
+                    Image(systemName: ImageName.cancelButton).opacity(searchText == "" ? 0 : 1)
+                }
+            }
+            .padding(EdgeInsets(top: 8, leading: 6, bottom: 8, trailing: 6))
+            .foregroundColor(.secondary)
+            .background(Color(.secondarySystemBackground))
+            .cornerRadius(10.0)
+        }.padding([.leading, .trailing])
     }
 }
 

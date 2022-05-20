@@ -43,6 +43,8 @@ class MapViewViewModel: ObservableObject {
         }
     }
     
+    /// Calling API to get latest weather information for updated location
+    /// - Parameter completion: return completion block after getting response from server
     func getNetworkData(completion: @escaping () -> ()) {
         NetworkManager.shared.getWeatherInformation(latitude: favouritePlaceModel.latitude ?? "",
                                                     longitude: favouritePlaceModel.longitude ?? "") { [self] weatherInformation, error in
