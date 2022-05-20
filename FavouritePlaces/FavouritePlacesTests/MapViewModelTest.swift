@@ -35,7 +35,7 @@ class MapViewModelTest: XCTestCase {
         }
     }
     
-    func testSyncDataFromModel() {
+    @MainActor func testSyncDataFromModel() {
         guard let mapViewViewModel = mapViewViewModel else { return }
         let favouritePlaceModel = FavouritePlaceDataModel(id: UUID(), imageURL: "", location: "Test Location",
                                                           enterLocationDetailsText: "TestModel", locationDescription: "", latitude: "30", longitude: "20")
@@ -48,7 +48,7 @@ class MapViewModelTest: XCTestCase {
         XCTAssertEqual(mapViewViewModel.longitudeTextField, "20")
     }
     
-    func testSyncMasterModel() {
+    @MainActor func testSyncMasterModel() {
         guard let mapViewViewModel = mapViewViewModel else { return }
         let favouritePlaceModel = FavouritePlaceDataModel(id: UUID(), imageURL: "", location: "Test Location",
                                                           enterLocationDetailsText: "TestModel", locationDescription: "",
