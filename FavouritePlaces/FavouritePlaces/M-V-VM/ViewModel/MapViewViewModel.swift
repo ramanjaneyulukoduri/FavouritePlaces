@@ -13,9 +13,12 @@ class MapViewViewModel: ObservableObject {
     @ObservedObject var favouritePlaceObservableModel: FavouritePlaceObservableModel = FavouritePlaceObservableModel()
     @Published var latitudeTextField: String = "35.0"
     @Published var longitudeTextField: String = "35.0"
+    @Published var mapView = MKMapView()
+    @Published var searchText: String = ""
+    @Published var places: [Place] = []
     @Published var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0),
-                                                   span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
-
+                                               span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
+    
     /// Get initial values from master view and show in parent view
     func syncDataFromModel() {
         latitudeTextField = favouritePlaceModel.latitude ?? "0.0"
@@ -28,6 +31,7 @@ class MapViewViewModel: ObservableObject {
     func doneButtonAction() {
         region.center.latitude = Double(latitudeTextField) ?? region.center.latitude
         region.center.longitude = Double(longitudeTextField) ?? region.center.longitude
+       // syncMasterModel()
     }
     
     ///Update parent model when map view disappear
@@ -37,7 +41,10 @@ class MapViewViewModel: ObservableObject {
         getNetworkData {
             for (index, item) in self.favouritePlaceObservableModel.favouritePlaceModels.enumerated() {
                 if item.id == self.favouritePlaceModel.id {
-                    self.favouritePlaceObservableModel.favouritePlaceModels[index] = self.favouritePlaceModel
+                    DispatchQueue.main.async {
+                        self.favouritePlaceObservableModel.favouritePlaceModels[index] = self.favouritePlaceModel
+
+                    }
                 }
             }
         }
@@ -52,5 +59,35 @@ class MapViewViewModel: ObservableObject {
             self.favouritePlaceModel.sunset = weatherInformation?.sunset ?? ""
             completion()
         }
+    }
+    
+    
+    func searchQuery() {
+        places.removeAll()
+        let request = MKLocalSearch.Request()
+        request.naturalLanguageQuery = searchText
+        
+        MKLocalSearch(request: request).start { response, error in
+            
+            guard let result = response else { return }
+            self.places = result.mapItems.compactMap({ item -> Place? in
+                return Place(placemark: item.placemark)
+            })
+        }
+    }
+    
+    func selectPlace(place: Place){
+        searchText = ""
+        guard let coordinates = place.placemark.location?.coordinate else { return }
+        let pointAnnotation = MKPointAnnotation()
+        pointAnnotation.coordinate = coordinates
+        let title = place.placemark.name ?? "No Name"
+        pointAnnotation.title = title
+        favouritePlaceModel.location = title
+        region.center.latitude = coordinates.latitude
+        region.center.longitude = coordinates.longitude
+        latitudeTextField = "\(coordinates.latitude)"
+        longitudeTextField = "\(coordinates.longitude)"
+        
     }
 }

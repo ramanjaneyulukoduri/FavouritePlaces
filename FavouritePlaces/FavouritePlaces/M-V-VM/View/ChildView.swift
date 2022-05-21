@@ -37,10 +37,11 @@ struct ChildView: View {
             .onAppear {
                 syncDataFromModel()
                 getNetworkData()
+                
             }.onDisappear(perform: {
                 syncMasterModel()
             })
-            .navigationTitle(childViewModel.cityNameTextField)
+            .navigationTitle(favouritePlaceModel.location  ?? "")
             .toolbar {
                 //To show buttons in navigation bar
                 ToolbarItem(placement: .navigationBarTrailing) {

@@ -12,7 +12,6 @@ struct MapView: View {
     
     @EnvironmentObject var  mapViewViewModel: MapViewViewModel
     @State var isEditing: Bool = false
-    @State private var searchText = ""
     @State private var showCancelButton: Bool = false
     var body: some View {
         VStack(alignment: .leading) {
@@ -62,19 +61,28 @@ struct MapView: View {
     /// View to display when user is in edit more
     /// - Returns: Edit more view
     func showEditModeView() -> some View {
-        VStack(alignment: .leading) {
-            showSearchView()
-            getMapView()
-            VStack(alignment: .leading) {
-                HStack {
-                    Text(StringConstants.latitude)
-                    TextField(StringConstants.enterCityName, text: $mapViewViewModel.latitudeTextField)
-                }
-                HStack {
-                    Text(StringConstants.longitude)
-                    TextField(StringConstants.enterImageURL, text: $mapViewViewModel.longitudeTextField)
-                }
-            }.padding()
+        ZStack(alignment: .leading) {
+            VStack {
+                getMapView()
+                Spacer()
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text(StringConstants.latitude)
+                        TextField(StringConstants.enterCityName, text: $mapViewViewModel.latitudeTextField)
+                    }
+                    HStack {
+                        Text(StringConstants.longitude)
+                        TextField(StringConstants.enterImageURL, text: $mapViewViewModel.longitudeTextField)
+                    }
+                }.padding()
+            }
+            VStack {
+                showSearchView()
+                    .padding(.top)
+                showSearchResultView()
+                Spacer()
+                
+            }
         }
     }
     
@@ -99,16 +107,24 @@ struct MapView: View {
             HStack {
                 Image(systemName: ImageName.magnifyingGlass)
                     .foregroundColor(.blue)
-                TextField("search", text: $searchText, onEditingChanged: { isEditing in
+                TextField("search", text: $mapViewViewModel.searchText, onEditingChanged: { isEditing in
                     self.showCancelButton = true
                 }, onCommit: {
                     print("onCommit")
                 }).foregroundColor(.primary)
+                    .onChange(of: mapViewViewModel.searchText) { newValue in
+                        let delay = 0.3
+                        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                            if newValue == mapViewViewModel.searchText {
+                                self.mapViewViewModel.searchQuery()
+                            }
+                        }
+                    }
                 
                 Button(action: {
-                    self.searchText = ""
+                    mapViewViewModel.searchText = ""
                 }) {
-                    Image(systemName: ImageName.cancelButton).opacity(searchText == "" ? 0 : 1)
+                    Image(systemName: ImageName.cancelButton).opacity(mapViewViewModel.searchText == "" ? 0 : 1)
                 }
             }
             .padding(EdgeInsets(top: 8, leading: 6, bottom: 8, trailing: 6))
@@ -116,6 +132,26 @@ struct MapView: View {
             .background(Color(.secondarySystemBackground))
             .cornerRadius(10.0)
         }.padding([.leading, .trailing])
+    }
+    
+    func showSearchResultView() -> some View {
+        ScrollView {
+            if !mapViewViewModel.places.isEmpty && !mapViewViewModel.searchText.isEmpty {
+                VStack(alignment: .leading, spacing: 0) {
+                    ForEach(mapViewViewModel.places) { place in
+                        Text(place.placemark.name ?? "")
+                            .foregroundColor(.blue)
+                            .frame(maxWidth: .infinity, maxHeight: UIScreen.main.bounds.size.height * 0.5, alignment: .leading)
+                            .padding()
+                            .background(Color.white)
+                            .onTapGesture {
+                                mapViewViewModel.selectPlace(place: place)
+                            }
+                        
+                    }
+                }
+            }
+        }
     }
 }
 
