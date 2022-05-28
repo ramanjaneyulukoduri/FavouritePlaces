@@ -58,7 +58,8 @@ class MapViewModelTest: XCTestCase {
         mapViewViewModel.favouritePlaceObservableModel = FavouritePlaceObservableModel()
         
         mapViewViewModel.syncDataFromModel()
-        mapViewViewModel.syncMasterModel()
+        mapViewViewModel.syncMasterModel(completion: {
+        })
         XCTAssertEqual(favouritePlaceModel.latitude, "\(mapViewViewModel.region.center.latitude)")
         XCTAssertEqual(favouritePlaceModel.longitude, "\(mapViewViewModel.region.center.longitude)")
     }

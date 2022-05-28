@@ -37,23 +37,26 @@ struct ChildView: View {
             .onAppear {
                 syncDataFromModel()
                 getNetworkData()
-                
-            }.onDisappear(perform: {
                 syncMasterModel()
-            })
-            .navigationTitle(favouritePlaceModel.location  ?? "")
+            }.navigationTitle(favouritePlaceModel.location  ?? "")
             .toolbar {
                 //To show buttons in navigation bar
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    if childViewModel.isEditing {
-                        addEditModeHeaderView()
-                    } else {
-                        Button(StringConstants.edit) {
-                            childViewModel.isEditing.toggle()
-                        }
-                    }
+                   getToolBarItem()
                 }
             }
+    }
+    
+    func getToolBarItem() -> some View {
+        HStack {
+            if childViewModel.isEditing {
+                addEditModeHeaderView()
+            } else {
+                Button(StringConstants.edit) {
+                    childViewModel.isEditing.toggle()
+                }
+            }
+        }
     }
     
     /// Show Header view with reset or undo reset button based on user selection.
@@ -63,6 +66,7 @@ struct ChildView: View {
             Button(childViewModel.isEditing ? StringConstants.done : StringConstants.edit) {
                 childViewModel.isEditing.toggle()
                 saveDataInModel()
+                syncMasterModel()
             }
         }
     }

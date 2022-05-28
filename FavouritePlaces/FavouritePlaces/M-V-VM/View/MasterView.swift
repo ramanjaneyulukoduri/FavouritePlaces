@@ -10,8 +10,7 @@ import SwiftUI
 struct MasterView: View {
     
     ///State variable to update SwiftUI View
-    //@State var favouritePlaceModels: [FavouritePlaceDataModel] = []
-    @ObservedObject var favouritePlaceObservableModel = FavouritePlaceObservableModel()
+    @StateObject var favouritePlaceObservableModel = FavouritePlaceObservableModel()
     
     var body: some View {
         NavigationView {

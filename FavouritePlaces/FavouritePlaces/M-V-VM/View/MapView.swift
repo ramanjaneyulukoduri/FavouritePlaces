@@ -10,9 +10,10 @@ import MapKit
 
 struct MapView: View {
     
-    @EnvironmentObject var  mapViewViewModel: MapViewViewModel
+    @EnvironmentObject var mapViewViewModel: MapViewViewModel
     @State var isEditing: Bool = false
     @State private var showCancelButton: Bool = false
+    @Environment(\.presentationMode) var presentationMode
     var body: some View {
         VStack(alignment: .leading) {
             if isEditing {
@@ -22,8 +23,6 @@ struct MapView: View {
             }
         }.onAppear(perform: {
             mapViewViewModel.syncDataFromModel()
-        }).onDisappear(perform: {
-            mapViewViewModel.syncMasterModel()
         }).navigationTitle(StringConstants.mapOf + (mapViewViewModel.favouritePlaceModel.location ?? ""))
             .toolbar {
                 //To show buttons in navigation bar
@@ -37,11 +36,28 @@ struct MapView: View {
                     }
                 }
             }
+            .navigationBarBackButtonHidden(true)
+            .navigationBarItems(leading: getBackButton())
     }
     
     func getMapView() -> some View {
         VStack {
             Map(coordinateRegion: $mapViewViewModel.region)
+        }
+    }
+    
+    func getBackButton() -> some View {
+        HStack {
+            Button(action: {
+                mapViewViewModel.syncMasterModel(completion: {
+                    self.presentationMode.wrappedValue.dismiss()
+                })
+            }) {
+                HStack {
+                    Image(systemName: "arrow.backward")
+                    Text("Back")
+                }
+            }
         }
     }
     
@@ -146,6 +162,7 @@ struct MapView: View {
                             .background(Color.white)
                             .onTapGesture {
                                 mapViewViewModel.selectPlace(place: place)
+                                mapViewViewModel.isPlaceSelectedFromSearchField = true
                             }
                         
                     }

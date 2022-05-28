@@ -16,6 +16,7 @@ class MapViewViewModel: ObservableObject {
     @Published var mapView = MKMapView()
     @Published var searchText: String = ""
     @Published var places: [Place] = []
+    var isPlaceSelectedFromSearchField: Bool = false
     @Published var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0),
                                                span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
     
@@ -31,11 +32,14 @@ class MapViewViewModel: ObservableObject {
     func doneButtonAction() {
         region.center.latitude = Double(latitudeTextField) ?? region.center.latitude
         region.center.longitude = Double(longitudeTextField) ?? region.center.longitude
-       // syncMasterModel()
+        if !isPlaceSelectedFromSearchField {
+            updateAddressfromLocation()
+        }
+        isPlaceSelectedFromSearchField.toggle()
     }
     
     ///Update parent model when map view disappear
-    func syncMasterModel() {
+    func syncMasterModel(completion : @escaping () -> Void) {
         favouritePlaceModel.latitude = "\(region.center.latitude)"
         favouritePlaceModel.longitude =  "\(region.center.longitude)"
         getNetworkData {
@@ -43,7 +47,7 @@ class MapViewViewModel: ObservableObject {
                 if item.id == self.favouritePlaceModel.id {
                     DispatchQueue.main.async {
                         self.favouritePlaceObservableModel.favouritePlaceModels[index] = self.favouritePlaceModel
-
+                        completion()
                     }
                 }
             }
@@ -76,18 +80,36 @@ class MapViewViewModel: ObservableObject {
         }
     }
     
+    /// Action when user select location from search result
+    /// - Parameter place: User selected place
     func selectPlace(place: Place){
         searchText = ""
-        guard let coordinates = place.placemark.location?.coordinate else { return }
+        updateAddress(placemark: place.placemark)
+    }
+    
+    func updateAddress(placemark: CLPlacemark) {
+        guard let coordinates = placemark.location?.coordinate else { return }
         let pointAnnotation = MKPointAnnotation()
         pointAnnotation.coordinate = coordinates
-        let title = place.placemark.name ?? "No Name"
+        let title = placemark.name ?? "No Name"
         pointAnnotation.title = title
         favouritePlaceModel.location = title
         region.center.latitude = coordinates.latitude
         region.center.longitude = coordinates.longitude
         latitudeTextField = "\(coordinates.latitude)"
         longitudeTextField = "\(coordinates.longitude)"
-        
+    }
+    
+    func updateAddressfromLocation() {
+        let latitude: Double = region.center.latitude
+        let longitude = region.center.longitude
+        let location: CLLocation = CLLocation(latitude: latitude, longitude: longitude)
+        let ceo: CLGeocoder = CLGeocoder()
+        ceo.reverseGeocodeLocation(location, completionHandler:  {(placemarks, error) in
+            if let placemark = placemarks?.first {
+                self.updateAddress(placemark: placemark)
+            }
+        })
+
     }
 }

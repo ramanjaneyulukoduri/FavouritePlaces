@@ -10,7 +10,6 @@ import CoreLocation
 
 @MainActor final class FavouritePlaceObservableModel: ObservableObject {
     
-    @Published var searchBarText = ""
     @Published var favouritePlaceModels: [FavouritePlaceDataModel] = []
     
     init() {
