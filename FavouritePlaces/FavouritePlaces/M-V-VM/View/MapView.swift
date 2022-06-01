@@ -46,6 +46,9 @@ struct MapView: View {
         }
     }
     
+    
+    /// Added back button to navigate to previous screen
+    /// - Returns: Previous screen
     func getBackButton() -> some View {
         HStack {
             Button(action: {
@@ -128,6 +131,9 @@ struct MapView: View {
         }
     }
     
+    
+    /// Added Search view to enable search what user entered.
+    /// - Returns: Result of search text
     func showSearchView() -> some View {
         HStack {
             HStack {
@@ -160,6 +166,9 @@ struct MapView: View {
         }.padding([.leading, .trailing])
     }
     
+    
+    /// Show result of user's entry
+    /// - Returns: on click update map with selected location
     func showSearchResultView() -> some View {
         ScrollView {
             if !mapViewViewModel.places.isEmpty && !mapViewViewModel.searchText.isEmpty {
