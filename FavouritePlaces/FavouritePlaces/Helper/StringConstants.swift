@@ -32,4 +32,5 @@ struct ImageName {
     static let globeImage = "globe.europe.africa.fill"
     static let circle = "mappin.slash.circle"
     static let cancelButton = "xmark.circle.fill"
+    static let globe = "globe.europe.africa.fill"
 }

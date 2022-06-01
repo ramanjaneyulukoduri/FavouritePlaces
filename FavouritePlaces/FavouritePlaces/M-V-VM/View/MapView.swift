@@ -83,12 +83,22 @@ struct MapView: View {
                 Spacer()
                 VStack(alignment: .leading) {
                     HStack {
-                        Text(StringConstants.latitude)
-                        TextField(StringConstants.enterCityName, text: $mapViewViewModel.latitudeTextField)
-                    }
-                    HStack {
-                        Text(StringConstants.longitude)
-                        TextField(StringConstants.enterImageURL, text: $mapViewViewModel.longitudeTextField)
+                        Button {
+                            mapViewViewModel.doneButtonAction()
+                        } label: {
+                            Image(systemName: ImageName.globe)
+                        }
+                        
+                        VStack {
+                            HStack {
+                                Text(StringConstants.latitude)
+                                TextField(StringConstants.enterCityName, text: $mapViewViewModel.latitudeTextField)
+                            }
+                            HStack {
+                                Text(StringConstants.longitude)
+                                TextField(StringConstants.enterImageURL, text: $mapViewViewModel.longitudeTextField)
+                            }
+                        }
                     }
                 }.padding()
             }
@@ -164,7 +174,6 @@ struct MapView: View {
                                 mapViewViewModel.selectPlace(place: place)
                                 mapViewViewModel.isPlaceSelectedFromSearchField = true
                             }
-                        
                     }
                 }
             }
